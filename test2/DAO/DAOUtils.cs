@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 namespace University.DAO
 {
     public class DAOUtils
-    {
+    {/*
         public static MySqlConnection GetDBConnection()
         {
             string host = "192.168.205.130";
@@ -18,6 +18,6 @@ namespace University.DAO
             string password = "inu07040";
 
             return DAOString.GetDBConnection(host, port, database, username, password);
-        }
+        }*/
     }
 }

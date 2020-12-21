@@ -9,7 +9,7 @@ namespace University
 {
     public class DAOString
     {
-        public static MySqlConnection GetDBConnection(string host, int port, string database, string username, string password)
+      /*  public static MySqlConnection GetDBConnection(string host, int port, string database, string username, string password)
         {
             // Connection String.
             String connString = "Server=" + host + ";Database=" + database + ";port=" + port + ";User Id=" + username + ";password=" + password;
@@ -17,6 +17,6 @@ namespace University
             MySqlConnection conn = new MySqlConnection(connString);
 
             return conn;
-        }
+        }*/
     }
 }

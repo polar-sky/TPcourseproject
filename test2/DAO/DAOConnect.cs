@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 namespace University.DAO
 {
     public class DAOConnect
-    {
+    {/*
         public MySqlConnection Connection { get; set; }
         public void Connect()
         {
@@ -19,5 +19,5 @@ namespace University.DAO
         {
             Connection.Close();
         }
-    }
+   */ }
 }
