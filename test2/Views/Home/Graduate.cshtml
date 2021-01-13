@@ -1,0 +1,28 @@
+﻿@using University.Models
+@model IEnumerable<Graduate>
+
+@{
+    ViewBag.Title = "Студенты";
+}
+<br /><br />
+      <center>
+          <table border="1">
+              @foreach (var item in Model)
+              {
+                  <tr>
+                      <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                      <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                      <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                      <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
+                      <td>@Html.DisplayFor(modelItem => item.GroupId)</td>
+                      <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                      <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                      <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
+                      <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
+                      <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
+                      <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
+                      <td>@Html.DisplayFor(modelItem => item.AcademicDegreeId)</td>
+                  </tr>
+              }
+          </table>
+      </center>

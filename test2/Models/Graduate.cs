@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace University.Models
 {
@@ -28,4 +29,5 @@ namespace University.Models
         public virtual AcademicGroup Group { get; set; }
         public virtual ICollection<Gqw> Gqw { get; set; }
     }
+
 }

@@ -14,7 +14,9 @@ namespace University.Controllers
 
         public ActionResult Index()
         {
-            //ViewBag.Message = university.AcademicDegree.Include(x => x.Teacher.Where(y => y.LastName == "ВауКруто"));
+            ViewBag.Message = university.Teacher.Include(x => x.LastName == "Кириллова");
+            //ViewBag.Message = "University and students";
+
             return View();
         }
 
@@ -30,6 +32,11 @@ namespace University.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Graduate()
+        {
+            return View(university.Graduate.ToList());
         }
     }
 }
