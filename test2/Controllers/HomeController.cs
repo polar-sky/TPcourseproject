@@ -36,7 +36,9 @@ namespace University.Controllers
 
         public ActionResult Graduate()
         {
-            return View(university.Graduate.ToList());
+            ViewBag.Message = "Список выпускников";
+            var graduates = university.Graduate.Include(p => p.Company).Include(x => x.Group).Include(y => y.AcademicDegree);
+            return View(graduates.ToList());
         }
     }
 }

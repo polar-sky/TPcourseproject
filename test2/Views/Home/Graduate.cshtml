@@ -4,20 +4,22 @@
 @{
     ViewBag.Title = "Студенты";
 }
-<br /><br />
+
+<h2 align="center">@ViewBag.Message</h2>
+<br />
       
           <table class="table">
               <tr>
                   <th>@Html.DisplayNameFor(model => model.Id)</th>
-                  <th>Фамилия</th>
-                  <th>Имя</th>
-                  <th>Отчество</th>
-                  <th>id Группы</th>
-                  <th>Город</th>
-                  <th>id Компании</th>
-                  <th>Лекции</th>
-                  <th>Лабораторные</th>
-                  <th>Академическая <br />степень</th>
+                  <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                  <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                  <th>@Html.DisplayNameFor(model => model.Patronymic)</th>
+                  <th>@Html.DisplayNameFor(model => model.GroupId)</th>
+                  <th>@Html.DisplayNameFor(model => model.CurrentCity)</th>
+                  <th>@Html.DisplayNameFor(model => model.CompanyId)</th>
+                  <th>@Html.DisplayNameFor(model => model.DisciplineLecture)</th>
+                  <th>@Html.DisplayNameFor(model => model.DisciplineLaboratoryWorks)</th>
+                  <th>@Html.DisplayNameFor(model => model.AcademicDegreeId)</th>
               </tr>
               @foreach (var item in Model)
               {
@@ -26,12 +28,12 @@
                       <td>@Html.DisplayFor(modelItem => item.LastName)</td>
                       <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                       <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
-                      <td>@Html.DisplayFor(modelItem => item.GroupId)</td>
+                      <td>@Html.DisplayFor(modelItem => item.Group.Name)</td>
                       <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
-                      <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
+                      <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
                       <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
                       <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
-                      <td>@Html.DisplayFor(modelItem => item.AcademicDegreeId)</td>
+                      <td>@Html.DisplayFor(modelItem => item.AcademicDegree.Degree)</td>
                   </tr>
               }
           </table>
