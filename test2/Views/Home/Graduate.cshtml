@@ -5,8 +5,20 @@
     ViewBag.Title = "Студенты";
 }
 <br /><br />
-      <center>
-          <table border="1">
+      
+          <table class="table">
+              <tr>
+                  <th>@Html.DisplayNameFor(model => model.Id)</th>
+                  <th>Фамилия</th>
+                  <th>Имя</th>
+                  <th>Отчество</th>
+                  <th>id Группы</th>
+                  <th>Город</th>
+                  <th>id Компании</th>
+                  <th>Лекции</th>
+                  <th>Лабораторные</th>
+                  <th>Академическая <br />степень</th>
+              </tr>
               @foreach (var item in Model)
               {
                   <tr>
@@ -15,8 +27,6 @@
                       <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                       <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
                       <td>@Html.DisplayFor(modelItem => item.GroupId)</td>
-                      <td>@Html.DisplayFor(modelItem => item.Phone)</td>
-                      <td>@Html.DisplayFor(modelItem => item.Email)</td>
                       <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
                       <td>@Html.DisplayFor(modelItem => item.CompanyId)</td>
                       <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
@@ -25,4 +35,4 @@
                   </tr>
               }
           </table>
-      </center>
+      
