@@ -1,0 +1,70 @@
+﻿@model University.Models.Graduate
+
+@{
+    ViewBag.Title = "Добавление выпускника";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Добавить выпускника</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.LastName, "Фамилия")
+    <br />
+    @Html.EditorFor(model => model.LastName)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.FirstName, "Имя")
+    <br />
+    @Html.EditorFor(model => model.FirstName)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.Patronymic, "Отчество")
+    <br />
+    @Html.EditorFor(model => model.Patronymic)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.GroupId, "Группа")
+    <br />
+    @Html.DropDownListFor(model => model.GroupId, ViewBag.Group as SelectList)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.Phone, "Телефон")
+    <br />
+    @Html.EditorFor(model => model.Phone)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.Email, "Email")
+    <br />
+    @Html.EditorFor(model => model.Email)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.CurrentCity, "Город")
+    <br />
+    @Html.EditorFor(model => model.CurrentCity)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.CompanyId, "Компания")
+    <br />
+    @Html.DropDownListFor(model => model.CompanyId, ViewBag.Company as SelectList)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.DisciplineLecture, "Лекция")
+    <br />
+    @Html.EditorFor(model => model.DisciplineLecture)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.DisciplineLaboratoryWorks, "Лабораторные")
+    <br />
+    @Html.EditorFor(model => model.DisciplineLaboratoryWorks)
+    <br />
+    <br />
+    @Html.LabelFor(model => model.AcademicDegreeId, "Академическая степень")
+    <br />
+    @Html.DropDownListFor(model => model.AcademicDegreeId, ViewBag.Degree as SelectList)
+    <br />
+    <br />
+    <input type="submit" value="Добавить" />
+}
+<br />
+@Html.ActionLink("К списку выпускников", "Index")

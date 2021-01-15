@@ -2,12 +2,13 @@
 @model IEnumerable<Graduate>
 
 @{
-    ViewBag.Title = "Студенты";
+    ViewBag.Title = "Выпускники";
 }
 
 <h2 align="center">@ViewBag.Message</h2>
 <br />
-      
+      @Html.ActionLink("Добавить выпускника", "Create")
+      <br />
           <table class="table">
               <tr>
                   <th>@Html.DisplayNameFor(model => model.Id)</th>

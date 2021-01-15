@@ -1,23 +1,78 @@
-﻿using University.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using University.Models;
 
 namespace University.Controllers
 {
     public class GraduateController : Controller
     {
-        universityContext _con;
-        public GraduateController()
-        {
-            _con = new universityContext();
-        }
+        universityContext university = new universityContext();
 
         public ActionResult Index()
         {
-            return View(_con.Graduate.ToList());
+            ViewBag.Message = "Список выпускников";
+            var graduates = university.Graduate
+                .Include(p => p.Company)
+                .Include(x => x.Group)
+                .Include(y => y.AcademicDegree);
+
+            return View(graduates.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            SelectList company = new SelectList(university.Company, "Id", "Name");
+            ViewBag.Company = company;
+            SelectList group = new SelectList(university.AcademicGroup, "Id", "Name");
+            ViewBag.Group = group;
+            SelectList degree = new SelectList(university.AcademicDegree, "Id", "Degree");
+            ViewBag.Degree = degree;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create([Bind(Exclude = "ID")] Graduate graduate)
+        {
+            university.Entry(graduate).State = EntityState.Added;
+            university.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            // Находим в бд футболиста
+            Graduate graduate = university.Graduate.Find(id);
+            if (graduate != null)
+            {
+                // Создаем список команд для передачи в представление
+                SelectList company = new SelectList(university.Company, "Id", "Name", graduate.CompanyId);
+                ViewBag.Company = company;
+                SelectList group = new SelectList(university.AcademicGroup, "Id", "Name", graduate.GroupId);
+                ViewBag.Group = group;
+                SelectList degree = new SelectList(university.AcademicDegree, "Id", "Degree", graduate.AcademicDegreeId);
+                ViewBag.Degree = degree;
+                return View(graduate);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Graduate graduate)
+        {
+            university.Entry(graduate).State = EntityState.Modified;
+            university.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

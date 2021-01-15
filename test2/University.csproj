@@ -288,9 +288,6 @@
     <Compile Include="Controllers\GraduateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DAO\DAOString.cs" />
-    <Compile Include="DAO\DAOConnect.cs" />
-    <Compile Include="DAO\DAOUtils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -370,11 +367,10 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Graduate.cshtml" />
+    <Content Include="Views\Graduate\Index.cshtml" />
+    <Content Include="Views\Graduate\Create.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Graduate\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

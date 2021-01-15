@@ -34,11 +34,15 @@ namespace University.Controllers
             return View();
         }
 
-        public ActionResult Graduate()
+        /*public ActionResult Graduate()
         {
             ViewBag.Message = "Список выпускников";
-            var graduates = university.Graduate.Include(p => p.Company).Include(x => x.Group).Include(y => y.AcademicDegree);
+            var graduates = university.Graduate
+                .Include(p => p.Company)
+                .Include(x => x.Group)
+                .Include(y => y.AcademicDegree);
+
             return View(graduates.ToList());
-        }
+        }*/
     }
 }
