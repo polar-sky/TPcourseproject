@@ -51,11 +51,10 @@ namespace University.Controllers
             {
                 return HttpNotFound();
             }
-            // Находим в бд футболиста
+            
             Graduate graduate = university.Graduate.Find(id);
             if (graduate != null)
-            {
-                // Создаем список команд для передачи в представление
+            {                
                 SelectList company = new SelectList(university.Company, "Id", "Name", graduate.CompanyId);
                 ViewBag.Company = company;
                 SelectList group = new SelectList(university.AcademicGroup, "Id", "Name", graduate.GroupId);

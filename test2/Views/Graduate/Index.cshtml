@@ -8,7 +8,7 @@
 <h2 align="center">@ViewBag.Message</h2>
 <br />
       @Html.ActionLink("Добавить выпускника", "Create")
-      <br />
+<br />
           <table class="table">
               <tr>
                   <th>@Html.DisplayNameFor(model => model.Id)</th>
@@ -21,6 +21,7 @@
                   <th>@Html.DisplayNameFor(model => model.DisciplineLecture)</th>
                   <th>@Html.DisplayNameFor(model => model.DisciplineLaboratoryWorks)</th>
                   <th>@Html.DisplayNameFor(model => model.AcademicDegreeId)</th>
+                  <th></th>
               </tr>
               @foreach (var item in Model)
               {
@@ -35,6 +36,11 @@
                       <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
                       <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
                       <td>@Html.DisplayFor(modelItem => item.AcademicDegree.Degree)</td>
+                      <td align="center">
+                          @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) 
+                          @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
+                          @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                      </td>
                   </tr>
               }
           </table>

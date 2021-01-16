@@ -369,6 +369,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Graduate\Index.cshtml" />
     <Content Include="Views\Graduate\Create.cshtml" />
+    <Content Include="Views\Graduate\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
