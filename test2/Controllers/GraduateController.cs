@@ -23,6 +23,21 @@ namespace University.Controllers
             return View(graduates.ToList());
         }
 
+         public ActionResult Details(int? id)
+         {
+             Graduate g = university.Graduate
+                 .Include(p => p.Company)
+                 .Include(x => x.Group)
+                 .Include(y => y.AcademicDegree)
+                 .FirstOrDefault(t => t.Id == id);
+
+             if (g == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(g);
+         }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -73,5 +88,45 @@ namespace University.Controllers
             university.SaveChanges();
             return RedirectToAction("Index");
         }
+
+       /* public ActionResult Delete(int id)
+        {
+            Graduate g = new Graduate { Id = id };
+            university.Entry(g).State = EntityState.Deleted;
+            university.SaveChanges();
+
+            return RedirectToAction("Index");
+        }*/
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            //Graduate g = university.Graduate.Find(id);
+            Graduate g = university.Graduate
+                .Include(p => p.Company)
+                .Include(x => x.Group)
+                .Include(y => y.AcademicDegree)
+                .FirstOrDefault(t => t.Id == id);
+
+            if (g == null)
+            {
+                return HttpNotFound();
+            }
+            return View(g);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Graduate g = university.Graduate.Find(id);
+            if (g == null)
+            {
+                return HttpNotFound();
+            }
+            university.Graduate.Remove(g);
+            university.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }
