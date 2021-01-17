@@ -45,6 +45,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
@@ -306,6 +309,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Partner.cs" />
     <Compile Include="Models\Sec.cs" />
+    <Compile Include="Models\SortState.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\universityContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

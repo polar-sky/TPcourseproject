@@ -3,43 +3,45 @@
 
 @{
     ViewBag.Title = "Выпускники";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 align="center">@ViewBag.Message</h2>
 <br />
-      @Html.ActionLink("Добавить выпускника", "Create")
+@Html.ActionLink("Добавить выпускника", "Create")
 <br />
-          <table class="table">
-              <tr>
-                  <th>@Html.DisplayNameFor(model => model.LastName)</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstName)</th>
-                  <th>@Html.DisplayNameFor(model => model.Patronymic)</th>
-                  <th>@Html.DisplayNameFor(model => model.GroupId)</th>
-                  <th>@Html.DisplayNameFor(model => model.CurrentCity)</th>
-                  <th>@Html.DisplayNameFor(model => model.CompanyId)</th>
-                  <th>@Html.DisplayNameFor(model => model.DisciplineLecture)</th>
-                  <th>@Html.DisplayNameFor(model => model.DisciplineLaboratoryWorks)</th>
-                  <th>@Html.DisplayNameFor(model => model.AcademicDegreeId)</th>
-                  <th></th>
-              </tr>
-              @foreach (var item in Model)
-              {
-                  <tr>
-                      <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-                      <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-                      <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
-                      <td>@Html.DisplayFor(modelItem => item.Group.Name)</td>
-                      <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
-                      <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
-                      <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
-                      <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
-                      <td>@Html.DisplayFor(modelItem => item.AcademicDegree.Degree)</td>
-                      <td align="center">
-                          @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) 
-                          @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
-                          @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
-                      </td>
-                  </tr>
-              }
-          </table>
-      
+
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Фамилия", "Index", new { sortOrder = ViewBag.NameSort })</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>@Html.ActionLink("Группа", "Index", new { sortOrder = ViewBag.GroupSort })</th>
+        <th>@Html.ActionLink("Город", "Index", new { sortOrder = ViewBag.CitySort })</th>
+        <th>@Html.ActionLink("Компания", "Index", new { sortOrder = ViewBag.CompanySort })</th>
+        <th>@Html.ActionLink("Лекции", "Index", new { sortOrder = ViewBag.LectSort })</th>
+        <th>@Html.ActionLink("Лабораторные", "Index", new { sortOrder = ViewBag.LabSort })</th>
+        <th>@Html.ActionLink("Академическая степень", "Index", new { sortOrder = ViewBag.DegreeSort })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
+            <td>@Html.DisplayFor(modelItem => item.Group.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
+            <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
+            <td>@Html.DisplayFor(modelItem => item.AcademicDegree.Degree)</td>
+            <td align="center">
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id })
+                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
