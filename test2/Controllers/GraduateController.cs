@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using University.Models;
+using PagedList;
 
 namespace University.Controllers
 {
@@ -13,11 +14,12 @@ namespace University.Controllers
     {
         universityContext university = new universityContext();
 
-        public async Task<ActionResult> Index(SortState sortOrder = SortState.NameAsc)
+        public ViewResult Index(string currentFilter, string searchString, int? page, string graduateGroup, SortState sortOrder = SortState.NameAsc)
         {
             ViewBag.Message = "Список выпускников";
             /***************************************
              * no sort, no filtr                   *
+             * ソートなし、フィルターなし             *
              ***************************************
              
             var graduates = university.Graduate
@@ -29,10 +31,14 @@ namespace University.Controllers
 
 
             /***************************************
-             * with filtr, but dont work           * string sortOrder
+             * with filtr, but dont work           * 
              * but i save this                     *
+             * フィルター付きですが、機能しません      *
+             * しかし、私はこれを保存します           *
              *************************************** 
              
+
+            string sortOrder
             IQueryable<Graduate> graduates = university.Graduate
                 .Include(p => p.Group)
                 .Include(x => x.Company)
@@ -54,8 +60,9 @@ namespace University.Controllers
             };
             return View(glvm);*/
 
-            /********************************************
-             * its dont work without select requests :( *
+            /*********************************************
+             * its dont work without select requests :(  *
+             * 選択したリクエストなしでは機能しません (╥﹏╥) *
              * ******************************************
             
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -81,39 +88,64 @@ namespace University.Controllers
             }
             return View(graduates.ToList());*/
 
-            IQueryable<Graduate> users = university.Graduate
+            IQueryable<Graduate> graduates = university.Graduate
                 .Include(x => x.Group)
                 .Include(y => y.Company)
                 .Include(z => z.AcademicDegree);
 
             ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
             ViewData["GroupSort"] = sortOrder == SortState.GroupAsc ? SortState.GroupDesc : SortState.GroupAsc;
-            ViewData["LectSort"] = sortOrder == SortState.LectAsc ? SortState.LectDesc : SortState.LectAsc;
-            ViewData["LabSort"] = sortOrder == SortState.LabAsc ? SortState.LabDesc : SortState.LabAsc;
+            ViewData["LectSort"] = sortOrder == SortState.LectAsc ? SortState.LectDesc : SortState.LectDesc;
+            ViewData["LabSort"] = sortOrder == SortState.LabAsc ? SortState.LabDesc : SortState.LabDesc;
             ViewData["CitySort"] = sortOrder == SortState.CityAsc ? SortState.CityDesc : SortState.CityAsc;
             ViewData["CompanySort"] = sortOrder == SortState.CompanyAsc ? SortState.CompanyDesc : SortState.CompanyAsc;
             ViewData["DegreeSort"] = sortOrder == SortState.DegreeAsc ? SortState.DegreeDesc : SortState.DegreeAsc;
 
-            users = sortOrder switch
+            if (searchString != null)
             {
-                SortState.NameDesc => users.OrderByDescending(s => s.LastName),
-                SortState.GroupAsc => users.OrderBy(s => s.Group.Name),
-                SortState.GroupDesc => users.OrderByDescending(s => s.Group.Name),
-                SortState.LectDesc => users.OrderByDescending(s => s.DisciplineLecture),
-                SortState.LectAsc => users.OrderBy(s => s.DisciplineLecture),
-                SortState.LabDesc => users.OrderByDescending(s => s.DisciplineLaboratoryWorks),
-                SortState.LabAsc => users.OrderBy(s => s.DisciplineLaboratoryWorks),
-                SortState.CityDesc => users.OrderByDescending(s => s.CurrentCity),
-                SortState.CityAsc => users.OrderBy(s => s.CurrentCity),
-                SortState.CompanyDesc => users.OrderByDescending(s => s.Company),
-                SortState.CompanyAsc => users.OrderBy(s => s.Company),
-                SortState.DegreeDesc => users.OrderByDescending(s => s.AcademicDegree),
-                SortState.DegreeAsc => users.OrderBy(s => s.AcademicDegree),
-                _ => users.OrderBy(s => s.LastName),
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                graduates = graduates.Where(s => s.LastName.Contains(searchString) 
+                                                || s.FirstName.Contains(searchString) 
+                                                || s.Patronymic.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(graduateGroup))
+            {
+                graduates = graduates.Where(x => x.Group.Name == graduateGroup);
+            }
+
+            graduates = sortOrder switch
+            {
+                SortState.NameDesc => graduates.OrderByDescending(s => s.LastName),
+                SortState.GroupAsc => graduates.OrderBy(s => s.Group.Name),
+                SortState.GroupDesc => graduates.OrderByDescending(s => s.Group.Name),
+                SortState.LectDesc => graduates.OrderByDescending(s => s.DisciplineLecture),
+                SortState.LectAsc => graduates.OrderBy(s => s.DisciplineLecture),
+                SortState.LabDesc => graduates.OrderByDescending(s => s.DisciplineLaboratoryWorks),
+                SortState.LabAsc => graduates.OrderBy(s => s.DisciplineLaboratoryWorks),
+                SortState.CityDesc => graduates.OrderByDescending(s => s.CurrentCity),
+                SortState.CityAsc => graduates.OrderBy(s => s.CurrentCity),
+                SortState.CompanyDesc => graduates.OrderByDescending(s => s.Company),
+                SortState.CompanyAsc => graduates.OrderBy(s => s.Company),
+                SortState.DegreeDesc => graduates.OrderByDescending(s => s.AcademicDegree),
+                SortState.DegreeAsc => graduates.OrderBy(s => s.AcademicDegree),
+                _ => graduates.OrderBy(s => s.LastName),
             };
-            return View(await users.AsNoTracking().ToListAsync());
 
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
 
+            return View(graduates.ToPagedList(pageNumber, pageSize));
         }
 
          public ActionResult Details(int? id)

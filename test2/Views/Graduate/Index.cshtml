@@ -1,5 +1,7 @@
 ﻿@using University.Models
-@model IEnumerable<Graduate>
+@using PagedList.Mvc;
+@model PagedList.IPagedList<University.Models.Graduate>
+
 
 @{
     ViewBag.Title = "Выпускники";
@@ -11,11 +13,17 @@
 @Html.ActionLink("Добавить выпускника", "Create")
 <br />
 
+@using (Html.BeginForm("Index", "Graduate", FormMethod.Get))
+{
+    <p>
+        LastName: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
-        <th>@Html.ActionLink("Фамилия", "Index", new { sortOrder = ViewBag.NameSort })</th>
-        <th>Имя</th>
-        <th>Отчество</th>
+        <th>@Html.ActionLink("ФИО", "Index", new { sortOrder = ViewBag.NameSort })</th>
         <th>@Html.ActionLink("Группа", "Index", new { sortOrder = ViewBag.GroupSort })</th>
         <th>@Html.ActionLink("Город", "Index", new { sortOrder = ViewBag.CitySort })</th>
         <th>@Html.ActionLink("Компания", "Index", new { sortOrder = ViewBag.CompanySort })</th>
@@ -28,20 +36,28 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@Html.DisplayFor(modelItem => item.LastName)</td>
-            <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
-            <td>@Html.DisplayFor(modelItem => item.Patronymic)</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.Patronymic)
+            </td>
             <td>@Html.DisplayFor(modelItem => item.Group.Name)</td>
             <td>@Html.DisplayFor(modelItem => item.CurrentCity)</td>
             <td>@Html.DisplayFor(modelItem => item.Company.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.DisciplineLecture)</td>
-            <td>@Html.DisplayFor(modelItem => item.DisciplineLaboratoryWorks)</td>
+            <td>@(item.DisciplineLecture == true?"Готов":"Не готов")</td>
+            <td>@(item.DisciplineLaboratoryWorks == true? "Готов" : "Не готов")</td>
             <td>@Html.DisplayFor(modelItem => item.AcademicDegree.Degree)</td>
             <td align="center">
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id })
-                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.Id })
                 @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
 </table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
