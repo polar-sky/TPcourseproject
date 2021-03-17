@@ -20,6 +20,8 @@ namespace University.Controllers
             /***************************************
              * no sort, no filtr                   *
              * ソートなし、フィルターなし             *
+             * oshiete yo shiete yo sono shikumi wo*
+             * boku no naka ni, dare ga iru no?    *
              ***************************************
              
             var graduates = university.Graduate
