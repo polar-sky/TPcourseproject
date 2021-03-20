@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -17,6 +18,7 @@ namespace University.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        universityContext university = new universityContext();
 
         public AccountController()
         {
@@ -135,7 +137,6 @@ namespace University.Controllers
             }
         }
 
-        
         //GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -154,7 +155,7 @@ namespace University.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.Login
+                    UserName = model.UserName
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

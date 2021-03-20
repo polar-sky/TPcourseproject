@@ -10,6 +10,7 @@ using PagedList;
 
 namespace University.Controllers
 {
+    [Authorize(Roles ="methodist, secretary")]
     public class GraduateController : Controller
     {
         universityContext university = new universityContext();
@@ -165,6 +166,7 @@ namespace University.Controllers
              return View(g);
          }
 
+        [Authorize(Roles ="methodist")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -177,6 +179,7 @@ namespace University.Controllers
             return View();
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "ID")] Graduate graduate)
         {
@@ -186,6 +189,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -208,6 +212,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost]
         public ActionResult Edit(Graduate graduate)
         {
@@ -216,6 +221,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -232,6 +238,7 @@ namespace University.Controllers
             return View(g);
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {

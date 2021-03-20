@@ -14,7 +14,7 @@ namespace University.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Message = university.Teacher.Include(x => x.LastName == "Кириллова");
+            
             //ViewBag.Message = "University and students";
 
             return View();
