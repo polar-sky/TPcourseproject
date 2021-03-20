@@ -393,6 +393,7 @@
     <Content Include="Views\GQW\Edit.cshtml" />
     <Content Include="Views\GQW\Details.cshtml" />
     <Content Include="Views\GQW\Create.cshtml" />
+    <Content Include="Views\GQW\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
