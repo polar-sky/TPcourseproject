@@ -14,7 +14,7 @@ namespace University.Controllers
     {
         universityContext university = new universityContext();
 
-        public ViewResult Index(int? page)
+        public ViewResult Index(string currentFilter, string searchString, int? page, string gqwGroup, SortState sortOrder = SortState.NameAsc)
         {
             ViewBag.Message = "Список выпускных квалификационных работ";
 
@@ -24,7 +24,40 @@ namespace University.Controllers
                 .Include(z => z.Teacher)
                 .Include(w => w.Sec);
 
-            page = 1;
+            ViewData["NameSort"] = sortOrder == SortState.NameAsc ? SortState.NameDesc : SortState.NameAsc;
+            ViewData["ArchSort"] = sortOrder == SortState.ArchAsc ? SortState.ArchDesc : SortState.ArchAsc;
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                gqws = gqws.Where(s => s.Graduate.LastName.Contains(searchString)
+                                                || s.Graduate.FirstName.Contains(searchString)
+                                                || s.Graduate.Patronymic.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(gqwGroup))
+            {
+                gqws = gqws.Where(x => x.Graduate.Group.Name == gqwGroup);
+            }
+
+            gqws = sortOrder switch
+            {
+                SortState.NameDesc => gqws.OrderByDescending(s => s.Graduate.LastName),
+                SortState.ArchAsc => gqws.OrderBy(s => s.IsArchived),
+                SortState.ArchDesc => gqws.OrderByDescending(s => s.IsArchived),
+                _ => gqws.OrderBy(s => s.Graduate.LastName),
+            };
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
@@ -51,12 +84,16 @@ namespace University.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            SelectList company = new SelectList(university.Company, "Id", "Name");
-            ViewBag.Company = company;
-            SelectList group = new SelectList(university.AcademicGroup, "Id", "Name");
-            ViewBag.Group = group;
-            SelectList degree = new SelectList(university.AcademicDegree, "Id", "Degree");
-            ViewBag.Degree = degree;
+            SelectList graduateLastName = new SelectList(university.Graduate, "Id", "LastName");
+            ViewBag.GraduateLastN = graduateLastName;
+            SelectList graduateName = new SelectList(university.Graduate, "Id", "FirstName");
+            ViewBag.GraduateFirstN = graduateName;
+            SelectList reviewer = new SelectList(university.Partner, "Id", "LastName");
+            ViewBag.Reviewer = reviewer;
+            SelectList teacher = new SelectList(university.Teacher, "Id", "LastName");
+            ViewBag.Teacher = teacher;
+            SelectList sec = new SelectList(university.Sec, "Id", "Year");
+            ViewBag.Sec = sec;
             return View();
         }
 
@@ -80,11 +117,11 @@ namespace University.Controllers
             Gqw gqw = university.Gqw.Find(id);
             if (gqw != null)
             {
-                SelectList graduate = new SelectList(university.Graduate, "Id", "Last Name", gqw.GraduateId);
+                SelectList graduate = new SelectList(university.Graduate, "Id", "LastName", gqw.GraduateId);
                 ViewBag.Graduate = graduate;
-                SelectList reviewer = new SelectList(university.Partner, "Id", "Last Name", gqw.ReviewerId);
+                SelectList reviewer = new SelectList(university.Partner, "Id", "LastName", gqw.ReviewerId);
                 ViewBag.Reviewer = reviewer;
-                SelectList teacher = new SelectList(university.Teacher, "Id", "Last Name", gqw.TeacherId);
+                SelectList teacher = new SelectList(university.Teacher, "Id", "LastName", gqw.TeacherId);
                 ViewBag.Teacher = teacher;
                 SelectList sec = new SelectList(university.Sec, "Id", "Year", gqw.SecId);
                 ViewBag.Sec = sec;

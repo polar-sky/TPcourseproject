@@ -20,6 +20,8 @@ namespace University.Models
         CompanyAsc,
         CompanyDesc,
         DegreeAsc,
-        DegreeDesc
+        DegreeDesc,
+        ArchAsc,
+        ArchDesc
     }
 }

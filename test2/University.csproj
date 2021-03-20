@@ -390,6 +390,9 @@
     <Content Include="Views\Graduate\Details.cshtml" />
     <Content Include="Views\Graduate\Delete.cshtml" />
     <Content Include="Views\GQW\Index.cshtml" />
+    <Content Include="Views\GQW\Edit.cshtml" />
+    <Content Include="Views\GQW\Details.cshtml" />
+    <Content Include="Views\GQW\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
