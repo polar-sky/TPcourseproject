@@ -1,0 +1,63 @@
+﻿@using University.Models
+@using PagedList.Mvc;
+@model PagedList.IPagedList<University.Models.Gqw>
+
+
+@{ ViewBag.Title = "Выпускные квалификационные работы";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2 align="center">@ViewBag.Message</h2>
+<br />
+@Html.ActionLink("Добавить ВКР", "Create")
+<br />
+
+@using (Html.BeginForm("Index", "GQW", FormMethod.Get))
+{
+<p>
+    LastName: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    <input type="submit" value="Search" />
+</p>}
+
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Студент", "Index", new { sortOrder = ViewBag.NameSort })</th>
+        <th>@Html.ActionLink("Рецензент", "Index", new { sortOrder = ViewBag.GroupSort })</th>
+        <th>@Html.ActionLink("Научный рук.", "Index", new { sortOrder = ViewBag.CitySort })</th>
+        <th>@Html.ActionLink("ГЭК", "Index", new { sortOrder = ViewBag.CompanySort })</th>
+        <th>@Html.ActionLink("Тема", "Index", new { sortOrder = ViewBag.LectSort })</th>
+        <th>@Html.ActionLink("Оценка", "Index", new { sortOrder = ViewBag.LabSort })</th>
+        <th>@Html.ActionLink("Оценка рецензента", "Index", new { sortOrder = ViewBag.DegreeSort })</th>
+        <th>@Html.ActionLink("Архивация", "Index", new { sortOrder = ViewBag.DegreeSort })</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Graduate.LastName)
+        @Html.DisplayFor(modelItem => item.Graduate.FirstName)
+        @Html.DisplayFor(modelItem => item.Graduate.Patronymic)
+
+    </td>
+    <td>@Html.DisplayFor(modelItem => item.Reviewer.LastName)</td>
+    <td>@Html.DisplayFor(modelItem => item.Teacher.LastName)</td>
+    <td>@Html.DisplayFor(modelItem => item.Sec.Chairman.LastName)</td>
+    <td>@Html.DisplayFor(modelItem => item.Theme)</td>
+    <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+    <td>@Html.DisplayFor(modelItem => item.ReviewerGrade)</td>
+    <td>@(item.IsArchived == true?"В архиве":"Не в архиве")</td>
+    <td align="center">
+        @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Подробнее", "Details", new { id = item.Id })
+        @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+    </td>
+</tr>}
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

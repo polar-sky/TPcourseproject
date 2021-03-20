@@ -13,7 +13,7 @@ namespace University.Models
         public int Id { get; set; }
         public int? SecretaryId { get; set; }
         public int? ChairmanId { get; set; }
-        public DateTime? Year { get; set; }
+        public string Year { get; set; }
         public int? DepartmentId { get; set; }
 
         public virtual Partner Chairman { get; set; }
