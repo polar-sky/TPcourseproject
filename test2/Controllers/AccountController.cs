@@ -59,6 +59,10 @@ namespace University.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

@@ -385,6 +385,7 @@
     <Content Include="Views\Graduate\Edit.cshtml" />
     <Content Include="Views\Graduate\Details.cshtml" />
     <Content Include="Views\Graduate\Delete.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

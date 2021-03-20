@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Ошибка доступа";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>@ViewBag.Title.</h2>
+
+<p>Недостаточно прав для данного действия.</p>
+
+<div>
+    @Html.ActionLink("Вернуться на главную", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

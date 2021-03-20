@@ -34,6 +34,12 @@ namespace University.Controllers
             return View();
         }
 
+        public ActionResult Error()
+        {
+
+            return View();
+        }
+
         /*public ActionResult Graduate()
         {
             ViewBag.Message = "Список выпускников";
