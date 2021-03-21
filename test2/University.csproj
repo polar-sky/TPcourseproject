@@ -428,10 +428,10 @@
     <Content Include="Views\GQW\Details.cshtml" />
     <Content Include="Views\GQW\Create.cshtml" />
     <Content Include="Views\GQW\Delete.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
