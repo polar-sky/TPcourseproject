@@ -25,6 +25,21 @@ namespace University.Models
         public string Purpose { get; set; }
     }
 
+    public class AddLFNameViewModel
+    {
+        [Required]
+        [Display(Name ="Фамилия")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name ="Имя")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Отчество")]
+        public string Patronymic { get; set; }
+    }
+
     public class SetPasswordViewModel
     {
         [Required]

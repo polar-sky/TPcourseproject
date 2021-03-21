@@ -63,6 +63,16 @@ namespace University.Models
 
     public class RegisterViewModel
     {
+        
+        [Display(Name = "Фамилия")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Имя")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Отчество")]
+        public string Patronymic { get; set; }
+
         [Required]
         [Display(Name = "Логин")]
         public string UserName { get; set; }

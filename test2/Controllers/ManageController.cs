@@ -54,6 +54,7 @@ namespace University.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль изменен."
                 : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
@@ -98,6 +99,38 @@ namespace University.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
+/*
+        //
+        // GET: /Manage/AddLFName
+        public ActionResult AddLFName()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/AddLFName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddLFName(AddLFNameViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await UserManager(User.Identity.GetUserId(), model.LastName);
+                if (result.Succeeded)
+                {
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+                }
+                AddErrors(result);
+            }
+
+            // Это сообщение означает наличие ошибки; повторное отображение формы
+            return View(model);
+        }*/
 
         //
         // GET: /Manage/AddPhoneNumber

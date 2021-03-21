@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.IUser>
+
+@{
+    ViewBag.Title = "Пользователи";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Список пользователей</h2>
+<table class="table">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => user.UserName)</td>
+            <td>
+                @Html.ActionLink("Права доступа", "Edit", new { id = user.Id })
+            </td>
+        </tr>
+    }
+</table>

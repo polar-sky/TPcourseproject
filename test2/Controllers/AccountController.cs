@@ -159,7 +159,10 @@ namespace University.Controllers
             {
                 var user = new ApplicationUser
                 {
-                    UserName = model.UserName
+                    UserName = model.UserName,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName,
+                    Patronymic = model.Patronymic
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
