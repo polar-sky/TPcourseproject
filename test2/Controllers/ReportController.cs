@@ -11,6 +11,7 @@ namespace University.Controllers
 {
     public class ReportController : Controller
     {
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(ReportController));
         public ViewResult Index()
         {
             return View();
@@ -43,6 +44,8 @@ namespace University.Controllers
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
 
+            logger.Info("Report dowloaded");
+
             return File(stream, "application/pdf", "GQWReport.pdf");
         }
 
@@ -73,6 +76,8 @@ namespace University.Controllers
 
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
+
+            logger.Info("Report dowloaded");
 
             return File(stream, "application/pdf", "GQWReport.pdf");
         }

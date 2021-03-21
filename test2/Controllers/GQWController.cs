@@ -13,7 +13,7 @@ namespace University.Controllers
     public class GQWController : Controller
     {
         universityContext university = new universityContext();
-
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(GQWController));
         public ViewResult Index(string currentFilter, string searchString, int? page, string gqwGroup, SortState sortOrder = SortState.NameAsc)
         {
             ViewBag.Message = "Список выпускных квалификационных работ";
@@ -76,6 +76,8 @@ namespace University.Controllers
 
             if (gqw == null)
             {
+                logger.Error("Invalid Id");
+
                 return HttpNotFound();
             }
             return View(gqw);
@@ -165,6 +167,9 @@ namespace University.Controllers
             }
             university.Gqw.Remove(gqw);
             university.SaveChanges();
+
+            logger.Warn($"Deletion happened");
+
             return RedirectToAction("Index");
         }
 
