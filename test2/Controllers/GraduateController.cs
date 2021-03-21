@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using University.Models;
 using PagedList;
 
 namespace University.Controllers
 {
+    [Authorize(Roles ="methodist, secretary")]
     public class GraduateController : Controller
     {
         universityContext university = new universityContext();
@@ -17,78 +15,6 @@ namespace University.Controllers
         public ViewResult Index(string currentFilter, string searchString, int? page, string graduateGroup, SortState sortOrder = SortState.NameAsc)
         {
             ViewBag.Message = "Список выпускников";
-            /***************************************
-             * no sort, no filtr                   *
-             * ソートなし、フィルターなし             *
-             * oshiete yo shiete yo sono shikumi wo*
-             * boku no naka ni, dare ga iru no?    *
-             ***************************************
-             
-            var graduates = university.Graduate
-                .Include(p => p.Company)
-                .Include(x => x.Group)
-                .Include(y => y.AcademicDegree);
-
-            return View(graduates.ToList());*/
-
-
-            /***************************************
-             * with filtr, but dont work           * 
-             * but i save this                     *
-             * フィルター付きですが、機能しません      *
-             * しかし、私はこれを保存します           *
-             *************************************** 
-             
-
-            string sortOrder
-            IQueryable<Graduate> graduates = university.Graduate
-                .Include(p => p.Group)
-                .Include(x => x.Company)
-                .Include(y => y.AcademicDegree);
-
-            if (group != null && group != 0)
-            {
-                graduates = graduates.Where(p => p.GroupId == group);
-            }
-
-            List<AcademicGroup> groups = university.AcademicGroup.ToList();
-            // устанавливаем начальный элемент, который позволит выбрать всех
-            groups.Insert(0, new AcademicGroup { Name = "Все", Id = 0 });
-
-            GraduateListViewModel glvm = new GraduateListViewModel
-            {
-                Graduates = graduates.ToList(),
-                Groups = new SelectList(groups, "Id", "Name"),
-            };
-            return View(glvm);*/
-
-            /*********************************************
-             * its dont work without select requests :(  *
-             * 選択したリクエストなしでは機能しません (╥﹏╥) *
-             * ******************************************
-            
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.GroupSortParm = String.IsNullOrEmpty(sortOrder) ? "group_desc" : "group";
-            var graduates = university.Graduate
-                .Include(p => p.Company)
-                .Include(x => x.Group)
-                .Include(y => y.AcademicDegree);
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    graduates = graduates.OrderByDescending(s => s.LastName);
-                    break;
-                case "group":
-                    graduates = graduates.OrderBy(s => s.Group);
-                    break;
-                case "group_desc":
-                    graduates = graduates.OrderByDescending(s => s.Group);
-                    break;
-                default:
-                    graduates = (Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<Graduate, AcademicDegree>)graduates.OrderBy(s => s.LastName);
-                    break;
-            }
-            return View(graduates.ToList());*/
 
             IQueryable<Graduate> graduates = university.Graduate
                 .Include(x => x.Group)
@@ -167,6 +93,7 @@ namespace University.Controllers
              return View(g);
          }
 
+        [Authorize(Roles ="methodist")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -179,6 +106,7 @@ namespace University.Controllers
             return View();
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost]
         public ActionResult Create([Bind(Exclude = "ID")] Graduate graduate)
         {
@@ -188,6 +116,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -210,6 +139,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost]
         public ActionResult Edit(Graduate graduate)
         {
@@ -218,6 +148,7 @@ namespace University.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -234,6 +165,7 @@ namespace University.Controllers
             return View(g);
         }
 
+        [Authorize(Roles = "methodist")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {

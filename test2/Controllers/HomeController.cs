@@ -14,7 +14,6 @@ namespace University.Controllers
 
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -28,6 +27,12 @@ namespace University.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult Error()
+        {
 
             return View();
         }

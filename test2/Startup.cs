@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using University.Models;
 
 [assembly: OwinStartupAttribute(typeof(University.Startup))]
 namespace University
