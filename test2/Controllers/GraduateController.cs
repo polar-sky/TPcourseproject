@@ -11,7 +11,7 @@ namespace University.Controllers
     public class GraduateController : Controller
     {
         universityContext university = new universityContext();
-
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(GraduateController));
         public ViewResult Index(string currentFilter, string searchString, int? page, string graduateGroup, SortState sortOrder = SortState.NameAsc)
         {
             ViewBag.Message = "Список выпускников";
@@ -86,7 +86,9 @@ namespace University.Controllers
 
              if (g == null)
              {
-                 return HttpNotFound();
+                logger.Error("Invalid Id");
+
+                return HttpNotFound();
              }
              return View(g);
          }
@@ -174,6 +176,9 @@ namespace University.Controllers
             }
             university.Graduate.Remove(g);
             university.SaveChanges();
+
+            logger.Warn($"Deletion happened");
+
             return RedirectToAction("Index");
         }
 

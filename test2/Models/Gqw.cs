@@ -11,10 +11,10 @@ namespace University.Models
         public int? TeacherId { get; set; }
         public int? SecId { get; set; }
         public string Theme { get; set; }
-        public sbyte? Grade { get; set; }
-        public sbyte? ReviewerGrade { get; set; }
+        public int? Grade { get; set; }
+        public int? ReviewerGrade { get; set; }
         public DateTime? DateOfDefence { get; set; }
-        public sbyte? ProtocolNumber { get; set; }
+        public int? ProtocolNumber { get; set; }
         public bool? IsArchived { get; set; }
 
         public virtual Graduate Graduate { get; set; }

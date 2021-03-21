@@ -458,7 +458,7 @@ namespace University.Models
 
                 entity.Property(e => e.Year)
                     .HasColumnName("year")
-                    .HasColumnType("date");
+                    .HasColumnType("varchar(20)");
 
                 entity.HasOne(d => d.Chairman)
                     .WithMany(p => p.Sec)

@@ -14,9 +14,6 @@ namespace University.Controllers
 
         public ActionResult Index()
         {
-
-            ViewBag.Message = User;
-
             return View();
         }
 
